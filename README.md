@@ -111,6 +111,33 @@ python main.py
 
 ---
 
+## API Documentation
+
+Once the server is running, FastAPI automatically generates interactive API documentation.
+
+### Swagger UI
+
+```text
+http://localhost:8000/docs
+```
+
+Swagger UI allows you to:
+- View all available endpoints
+- Inspect request parameters
+- Upload files directly from the browser
+- Execute requests without writing code
+- View API responses
+
+### ReDoc
+
+```text
+http://localhost:8000/redoc
+```
+
+Alternative documentation view generated automatically by FastAPI.
+
+---
+
 ## Available Endpoints
 
 ### Images
@@ -165,3 +192,17 @@ python main.py
 
 ```bash
 python -m pytest tests/testing.py
+```
+---
+
+## Live Demo
+
+https://toolkit-api-ct6k.onrender.com
+
+Note: The public demo is hosted on Render's free tier and may take a short time to wake up after periods of inactivity.
+
+---
+
+## Author
+
+Samuel Rodriguez
