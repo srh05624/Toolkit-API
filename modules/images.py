@@ -127,5 +127,6 @@ ALLOWED_EXTENSIONS = {
     "png",
     "bmp",
     "gif",
-    "tiff"
+    "tiff",
+    "webp"
 }

@@ -5,7 +5,12 @@ from fastapi.responses import StreamingResponse, JSONResponse
 from pydantic import BaseModel
 from modules import images, documents, compression
 
-aop = FastAPI()
+aop = FastAPI(
+    title="Toolkit API",
+    description="Image and PDF processing toolkit built with FastAPI.",
+    version="1.0.0"
+)
+
 size_limit = 10485760 # 10 MB (10 * 1024 * 1024)
 
 MEDIA_TYPES = {
@@ -120,7 +125,12 @@ def buffer_response(file_buffer, file_format, filename):
 # ==================================================
 #              -- Image processing --
 # ==================================================
-@aop.post("/images/convert")
+@aop.post(
+        "/images/convert",
+        summary="Convert an image to a different format",
+        description="Convert an uploaded image to a specified format (e.g., PNG, JPEG, WEBP). The original image format is detected automatically. Supported formats include PNG, JPEG, and WEBP.",
+        tags=["Images"]
+    )
 async def convert_image(
     file: UploadFile = File(...),
     target_format: str = Form(...)
@@ -144,7 +154,12 @@ async def convert_image(
 
     return buffer_response(img_buffer, file_format, "converted")
 
-@aop.post("/images/resize")
+@aop.post(
+        "/images/resize",
+        summary="Resize an image to specified dimensions",
+        description="Resize an uploaded image to the specified width and height. The original image format is detected automatically and preserved in the output. Supported formats include PNG, JPEG, and WEBP.",
+        tags=["Images"]
+    )
 async def resize_image(
     file: UploadFile = File(...),
     width: int = Form(..., ge=1),
@@ -169,7 +184,12 @@ async def resize_image(
     
     return buffer_response(img_buffer, file_format, "resized")
 
-@aop.post("/images/rotate")
+@aop.post(
+        "/images/rotate",
+        summary="Rotate an image by a specified angle",
+        description="Rotate an uploaded image by the specified angle in degrees. The original image format is detected automatically and preserved in the output. Supported formats include PNG, JPEG, and WEBP.",
+        tags=["Images"]
+    )
 async def rotate_image(
     file: UploadFile = File(...),
     angle: float | int = Form(...)
@@ -193,7 +213,12 @@ async def rotate_image(
 
     return buffer_response(img_buffer, file_format, "rotated")
 
-@aop.post("/images/compress")
+@aop.post(
+        "/images/compress",
+        summary="Compress an image to reduce its file size",
+        description="Compress an uploaded image by specifying the quality level (1-100). The original image format is detected automatically and preserved in the output. Supported formats include PNG, JPEG, and WEBP.",
+        tags=["Images"]
+    )
 async def compress_image(
     file: UploadFile = File(...),
     quality: int = Form(..., ge=1, le=100)
@@ -217,7 +242,12 @@ async def compress_image(
 
     return buffer_response(img_buffer, file_format, "compressed")
 
-@aop.post("/images/watermark")
+@aop.post(
+        "/images/watermark",
+        summary="Add a text watermark to an image",
+        description="Add a text watermark to an uploaded image. The original image format is detected automatically and preserved in the output. Supported formats include PNG, JPEG, and WEBP.",
+        tags=["Images"]
+    )
 async def watermark_image(
     file: UploadFile = File(...),
     text: str = Form(...)
@@ -241,7 +271,12 @@ async def watermark_image(
 
     return buffer_response(img_buffer, file_format, "watermarked")
 
-@aop.post("/images/process")
+@aop.post(
+        "/images/process",
+        summary="Apply multiple operations to an image in sequence",
+        description="Apply a sequence of operations (e.g., resize, rotate, compress) to an uploaded image. The operations are specified in a JSON array, and the original image format is detected automatically and preserved in the output. Supported formats include PNG, JPEG, and WEBP.",
+        tags=["Images"]
+    )
 async def process_image(
     file: UploadFile = File(...),
     operations: str = Form(...)
@@ -295,7 +330,12 @@ async def process_image(
 # ==================================================
 #             -- Document processing --
 # ==================================================
-@aop.post("/documents/pdf/split")
+@aop.post(
+        "/documents/pdf/split",
+        summary="Split a PDF into separate pages",
+        description="Split an uploaded PDF document into separate pages. You can specify a password if the PDF is encrypted, and optionally specify which pages to split (e.g., '1,3,5' to split pages 1, 3, and 5). The output will be a ZIP file containing the individual page PDFs.",
+        tags=["PDF"]
+    )
 async def split_document(
     file: UploadFile = File(...),
     password: str | None = Form(""),
@@ -320,7 +360,12 @@ async def split_document(
 
     return zip_response(files_buffer, filename, "pdf")
 
-@aop.post("/documents/pdf/merge")
+@aop.post(
+        "/documents/pdf/merge",
+        summary="Merge multiple PDF documents into one",
+        description="Merge multiple uploaded PDF documents into a single PDF. You can specify a password if the PDFs are encrypted.",
+        tags=["PDF"]
+    )
 async def merge_documents(
     files: list[UploadFile] = File(...),
     password: str | None = Form("")
@@ -353,7 +398,12 @@ async def merge_documents(
 
     return buffer_response(file_buffer, "pdf", "merged")
 
-@aop.post("/documents/pdf/extract-text")
+@aop.post(
+        "/documents/pdf/extract-text",
+        summary="Extract text from a PDF document",
+        description="Extract text from an uploaded PDF document. You can specify a password if the PDF is encrypted.",
+        tags=["PDF"]
+    )
 async def extract_text(
     file: UploadFile = File(...),
     password: str | None = Form("")
@@ -377,7 +427,12 @@ async def extract_text(
 # ==================================================
 #                -- Health Check --
 # ==================================================
-@aop.get("/health")
+@aop.get(
+        "/health",
+        summary="Health check endpoint",
+        description="Check the health status of the API",
+        tags=["Utility"]
+    )
 async def health():
     return {"status": "healthy"}
 
