@@ -1,8 +1,5 @@
 import io
 from PIL import Image, ImageDraw, ImageFont
-from scripts.utils import Logger
-
-LOGGER = Logger("Images")
 
 def convert(file, target_format: str, file_format: str | None = None):
     try:
@@ -21,8 +18,7 @@ def convert(file, target_format: str, file_format: str | None = None):
 
             return buffer, format
         
-    except Exception as e:
-        LOGGER.error(f"Error opening image: {e}")
+    except Exception:
         return None, None
 
 def resize(file, width: int, height: int, file_format: str | None = None):
@@ -43,8 +39,7 @@ def resize(file, width: int, height: int, file_format: str | None = None):
             buffer.seek(0)
 
             return buffer, file_format if file_format else "JPEG"
-    except Exception as e:
-        LOGGER.error(f"Error resizing image: {e}")
+    except Exception:
         return None, None
     
 def rotate(file, angle: float, file_format: str | None = None):
@@ -65,8 +60,7 @@ def rotate(file, angle: float, file_format: str | None = None):
             buffer.seek(0)
 
             return buffer, file_format if file_format else "JPEG"
-    except Exception as e:
-        LOGGER.error(f"Error rotating image: {e}")
+    except Exception:
         return None, None
     
 def compress(file, quality: int, file_format: str | None = None):
@@ -85,8 +79,7 @@ def compress(file, quality: int, file_format: str | None = None):
             buffer.seek(0)
 
             return buffer, file_format if file_format else "JPEG"
-    except Exception as e:
-        LOGGER.error(f"Error compressing image: {e}")
+    except Exception:
         return None, None
     
 def watermark(file, text: str, file_format: str | None = None):
@@ -117,8 +110,7 @@ def watermark(file, text: str, file_format: str | None = None):
             buffer.seek(0)
 
             return buffer, file_format if file_format else "PNG"
-    except Exception as e:
-        LOGGER.error(f"Error adding watermark: {e}")
+    except Exception:
         return None, None
     
 PROCESSES = {

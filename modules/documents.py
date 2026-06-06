@@ -1,7 +1,5 @@
 import io, zipfile
-from scripts.utils import Logger
 from pypdf import PdfReader, PdfWriter
-LOGGER = Logger("Documents")
 
 # ==================================================
 #               -- PDF processing --
@@ -31,8 +29,7 @@ def split_pdf(file, password: str | None = None, pages: list[int] | None = None)
             names.append(f"page_{i+1}.pdf")
         
         return output_files
-    except Exception as e:
-        LOGGER.error(f"Error splitting PDF: {e}")
+    except Exception:
         return None
     
 def merge_pdfs(files, password: str | None = None):
@@ -56,8 +53,7 @@ def merge_pdfs(files, password: str | None = None):
         output_buffer.seek(0)
 
         return output_buffer
-    except Exception as e:
-        LOGGER.error(f"Error merging PDFs: {e}")
+    except Exception:
         return None
     
 def extract_text(file, password: str | None = None):
@@ -78,8 +74,7 @@ def extract_text(file, password: str | None = None):
         buffer.seek(0)
 
         return buffer
-    except Exception as e:
-        LOGGER.error(f"Error extracting text from PDF: {e}")
+    except Exception:
         return None
 
 PDF_SINGLE_PROCESSES = {
