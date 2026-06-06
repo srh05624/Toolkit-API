@@ -8,7 +8,7 @@ The API performs all operations in memory and returns the processed file directl
 
 ## Key Features
 
-✓ Automated API Tests
+✓ 13 Automated API Tests
 
 ---
 
@@ -197,7 +197,13 @@ python -m pytest tests/testing.py
 
 ## Live Demo
 
+API:
 https://toolkit-api-ct6k.onrender.com
+
+Swagger UI:
+https://toolkit-api-ct6k.onrender.com/docs
+
+![Swagger UI](screenshots/swagger-ui.png)
 
 Note: The public demo is hosted on Render's free tier and may take a short time to wake up after periods of inactivity.
 
